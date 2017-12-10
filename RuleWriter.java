@@ -29,6 +29,7 @@ public class RuleWriter {
             ruleElem.appendChild(writeConditions(conditions));
             ruleElem.appendChild(writeConclusions(conclusions));
             ruleElem.setAttribute("id",Integer.toString(rules.indexOf(rule)+1));
+            ruleElem.setAttribute("end",Boolean.toString(rule.isEndRule()));
             root.appendChild(ruleElem);
         }
         writeDocument();

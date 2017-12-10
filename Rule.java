@@ -60,7 +60,7 @@ public class Rule {
     }
 
     public void printRule(){
-        System.out.print("use No."+getId()+" rule:");
+        System.out.print("No."+getId()+" rule:");
         System.out.print("IF ");
         ArrayList<String> conditions = getConditions();
         ArrayList<String> conclusions = getConclusions();

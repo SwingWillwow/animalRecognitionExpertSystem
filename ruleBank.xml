@@ -143,4 +143,22 @@
             <conclusion id="1">animal is albatross</conclusion>
         </conclusions>
     </rule>
+    <rule id="16" end="false">
+        <conditions>
+            <condition id="1">animal live in sea</condition>
+            <condition id="2">animal breath with cheek</condition>
+        </conditions>
+        <conclusions>
+            <conclusion id="1">animal is fish</conclusion>
+        </conclusions>
+    </rule>
+    <rule id="17" end="true">
+        <conditions>
+            <condition id="1">animal is fish</condition>
+            <condition id="2">animal can eat people</condition>
+        </conditions>
+        <conclusions>
+            <conclusion id="1">animal is shark</conclusion>
+        </conclusions>
+    </rule>
 </rules>
