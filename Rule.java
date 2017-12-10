@@ -24,22 +24,22 @@ public class Rule {
         }
     }
     private int id;
-    private ArrayList<FactNode> conditions = new ArrayList<>();
-    private ArrayList<FactNode> conclusions = new ArrayList<>();
+    private ArrayList<String> conditions = new ArrayList<>();
+    private ArrayList<String> conclusions = new ArrayList<>();
     private boolean endRule;
-    public ArrayList<FactNode> getConditions() {
+    public ArrayList<String> getConditions() {
         return conditions;
     }
 
-    public void setConditions(ArrayList<FactNode> conditions) {
+    public void setConditions(ArrayList<String> conditions) {
         this.conditions = conditions;
     }
 
-    public ArrayList<FactNode> getConclusions() {
+    public ArrayList<String> getConclusions() {
         return conclusions;
     }
 
-    public void setConclusions(ArrayList<FactNode> conclusions) {
+    public void setConclusions(ArrayList<String> conclusions) {
         this.conclusions = conclusions;
     }
 
@@ -62,20 +62,17 @@ public class Rule {
     public void printRule(){
         System.out.print("use No."+getId()+" rule:");
         System.out.print("IF ");
-        ArrayList<FactNode> conditions = getConditions();
-        ArrayList<FactNode> conclusions = getConclusions();
+        ArrayList<String> conditions = getConditions();
+        ArrayList<String> conclusions = getConclusions();
         System.out.print(conditions.get(0));
         for(int i=1;i<conditions.size();i++){
-            System.out.print(" AND "+conditions.get(i).getFact());
+            System.out.print(" AND "+conditions.get(i));
         }
         System.out.print(" THEN ");
         System.out.print(conclusions.get(0));
         for(int i=1;i<conclusions.size();i++){
-            System.out.print(" AND "+conclusions.get(i).getFact());
+            System.out.print(" AND "+conclusions.get(i));
         }
         System.out.println();
-    }
-    public void test(){
-        System.out.println("hello world!");
     }
 }
