@@ -24,22 +24,22 @@ public class Rule {
         }
     }
     private int id;
-    private ArrayList<String> conditions = new ArrayList<>();
-    private ArrayList<String> conclusions = new ArrayList<>();
+    private ArrayList<FactNode> conditions = new ArrayList<>();
+    private ArrayList<FactNode> conclusions = new ArrayList<>();
     private boolean endRule;
-    public ArrayList<String> getConditions() {
+    public ArrayList<FactNode> getConditions() {
         return conditions;
     }
 
-    public void setConditions(ArrayList<String> conditions) {
+    public void setConditions(ArrayList<FactNode> conditions) {
         this.conditions = conditions;
     }
 
-    public ArrayList<String> getConclusions() {
+    public ArrayList<FactNode> getConclusions() {
         return conclusions;
     }
 
-    public void setConclusions(ArrayList<String> conclusions) {
+    public void setConclusions(ArrayList<FactNode> conclusions) {
         this.conclusions = conclusions;
     }
 
@@ -62,8 +62,8 @@ public class Rule {
     public void printRule(){
         System.out.print("use No."+getId()+" rule:");
         System.out.print("IF ");
-        ArrayList<String> conditions = getConditions();
-        ArrayList<String> conclusions = getConclusions();
+        ArrayList<FactNode> conditions = getConditions();
+        ArrayList<FactNode> conclusions = getConclusions();
         System.out.print(conditions.get(0));
         for(int i=1;i<conditions.size();i++){
             System.out.print(" AND "+conditions.get(i));
