@@ -66,12 +66,12 @@ public class Rule {
         ArrayList<FactNode> conclusions = getConclusions();
         System.out.print(conditions.get(0));
         for(int i=1;i<conditions.size();i++){
-            System.out.print(" AND "+conditions.get(i));
+            System.out.print(" AND "+conditions.get(i).getFact());
         }
         System.out.print(" THEN ");
         System.out.print(conclusions.get(0));
         for(int i=1;i<conclusions.size();i++){
-            System.out.print(" AND "+conclusions.get(i));
+            System.out.print(" AND "+conclusions.get(i).getFact());
         }
         System.out.println();
     }
