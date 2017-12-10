@@ -68,11 +68,11 @@ public class DataBase {
     }
 
     public void initFacts(){
-//        facts.add("animal has dark spots");
-//        facts.add("animal has black stripes");
-//        facts.add("animal has tawny color");
-//        facts.add("animal eats meat");
-//        facts.add("animal has hair");
+        facts.add("animal has dark spots");
+        facts.add("animal has black stripes");
+        facts.add("animal has tawny color");
+        facts.add("animal eats meat");
+        facts.add("animal has hair");
     }
 
 

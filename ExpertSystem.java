@@ -9,8 +9,8 @@ public class ExpertSystem {
         ExpertSystem system = new ExpertSystem();
         system.rules = new RuleReader().readRules();
         system.dataBase = new DataBase();
-        //system.dataBase.initFacts();
-        //system.deduce();
+        system.dataBase.initFacts();
+        system.deduce();
         new RuleWriter().writeRules(system.rules);
     }
     public ExpertSystem(){
