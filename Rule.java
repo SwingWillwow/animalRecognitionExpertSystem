@@ -1,32 +1,16 @@
 import java.util.ArrayList;
 
+/**
+ * 该类定义了规则的结构
+ */
 public class Rule {
-    class FactNode{
-        public FactNode(){
-
-        }
-        private String fact;
-        private String type;
-        public String getFact() {
-            return fact;
-        }
-
-        public void setFact(String fact) {
-            this.fact = fact;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-    }
-    private int id;
-    private ArrayList<String> conditions = new ArrayList<>();
-    private ArrayList<String> conclusions = new ArrayList<>();
-    private boolean endRule;
+    private int id;//规则的id
+    private ArrayList<String> conditions = new ArrayList<>();//规则的全部前件
+    private ArrayList<String> conclusions = new ArrayList<>();//规则的全部后件
+    private boolean endRule;//是否结束规则的标记
+    /*
+        getters and setters
+     */
     public ArrayList<String> getConditions() {
         return conditions;
     }
@@ -59,6 +43,9 @@ public class Rule {
         this.id = id;
     }
 
+    /**
+     * 打印这条规则
+     */
     public void printRule(){
         System.out.print("No."+getId()+" rule:");
         System.out.print("IF ");

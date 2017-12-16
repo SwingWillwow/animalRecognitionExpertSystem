@@ -8,12 +8,20 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.util.ArrayList;
 
+/**
+ * 该类用于处理和规则读入相关的操作
+ */
 public class RuleReader {
     public RuleReader(){
 
     }
+
+    /**
+     * 读入规则
+     * @return 一个Rule组成的ArrayList代表了规则集
+     */
     public ArrayList<Rule> readRules(){
-        String rulePath = "src/ruleBank.xml";
+        String rulePath = "src/ruleBank.xml";//读取规则的路径
         File file = new File(rulePath);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder;
@@ -38,14 +46,32 @@ public class RuleReader {
         }
         return rules;
     }
+
+    /**
+     * 从xml文档中恢复规则的id号
+     * @param node 该规则在xml中对应的结点
+     * @return 规则的id
+     */
     private int getRuleId(Node node){
         String id = node.getAttributes().getNamedItem("id").getNodeValue();
         return Integer.parseInt(id);
     }
+
+    /**
+     * 判断规则是不是结束规则（即能不能推出一个结果)
+     * @param node 该规则在xml中对应的结点
+     * @return 是:true 不是:false
+     */
     private boolean isEndRule(Node node){
         String end = node.getAttributes().getNamedItem("end").getNodeValue();
         return Boolean.parseBoolean(end);
     }
+
+    /**
+     * 获取规则的前件
+     * @param node 该规则在xml中对应的结点
+     * @return 该规则的全部前件
+     */
     private ArrayList<String> getConditions(Node node){
         ArrayList<String> ret = new ArrayList<>();
         NodeList tmpList = node.getChildNodes();
@@ -63,6 +89,12 @@ public class RuleReader {
         }
         return ret;
     }
+
+    /**
+     * 获取规则的后件
+     * @param node 该规则在xml中对应的结点
+     * @return 该规则的全部后件
+     */
     private ArrayList<String> getConclusions(Node node){
         ArrayList<String> ret = new ArrayList<>();
         NodeList tmpList = node.getChildNodes();

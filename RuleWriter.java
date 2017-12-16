@@ -14,10 +14,16 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class RuleWriter {
-    private Document document;
+    private Document document;//用于生产xml的document
+    private final String savePath="src/saveRuleBank.xml";
     public RuleWriter(){
 
     }
+
+    /**
+     * 将传入的rules全部按照指定的xml格式写入到document中
+     * @param rules 将被保存的规则
+     */
     public void writeRules(ArrayList<Rule> rules){
         initDocument();
         Element root = document.createElement("rules");
@@ -35,6 +41,12 @@ public class RuleWriter {
         writeDocument();
 
     }
+
+    /**
+     * 写入一组条件（前件）。
+     * @param conditions 将要写入的这组前件
+     * @return 这组前件形成的xml Element
+     */
     private Element writeConditions(ArrayList<String> conditions){
         Element ret = document.createElement("conditions");
         for(String condition:conditions){
@@ -45,6 +57,12 @@ public class RuleWriter {
         }
         return ret;
     }
+
+    /**
+     * 写入一组结论（后件）
+     * @param conclusions 将要写入的一组后件
+     * @return 这组后件组成的xml Element
+     */
     private Element writeConclusions(ArrayList<String> conclusions){
         Element ret = document.createElement("conclusions");
         for(String conclusion:conclusions){
@@ -55,6 +73,10 @@ public class RuleWriter {
         }
         return ret;
     }
+
+    /**
+     * 初始化document
+     */
     private void initDocument(){
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -65,13 +87,17 @@ public class RuleWriter {
             e.printStackTrace();
         }
     }
+
+    /**
+     * 把document按照指定的格式写入到对应的xml文件中
+     */
     private  void writeDocument(){
         try {
             TransformerFactory factory = TransformerFactory.newInstance();
             Transformer transformer = factory.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT,"yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-            transformer.transform(new DOMSource(document),new StreamResult(new File("src/saveRuleBank.xml")));
+            transformer.transform(new DOMSource(document),new StreamResult(new File(savePath)));
         }
         catch (Exception e){
             e.printStackTrace();

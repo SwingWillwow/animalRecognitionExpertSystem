@@ -3,11 +3,11 @@ import java.util.Scanner;
 
 public class ExpertSystem {
 
-    private  boolean run = true;
-    private ArrayList<Rule> rules;
-    private DataBase dataBase;
+    private  boolean run = true;//判断系统是否继续执行的标记
+    private ArrayList<Rule> rules;//保存规则集
+    private DataBase dataBase;//综合数据库
     public static void main(String[] args) {
-        ExpertSystem system = new ExpertSystem();
+        ExpertSystem system = new ExpertSystem();//初始化系统对象
         system.initSystem();//初始化系统
         system.runSystem();//运行系统
         system.closeSystem();//结束系统，并保存规则
@@ -15,33 +15,55 @@ public class ExpertSystem {
     public ExpertSystem(){
 
     }
+
+    /**
+     * 对应课本上的stepForward
+     * @return 如果还有规则可用返回这条规则，否则返回null
+     */
     private Rule stepForward(){
         for(Rule rule:rules){
             if(dataBase.tryRule(rule))return rule;
         }
         return null;
     }
+
+    /**
+     * 等待用户查看结果再继续
+     */
     private void waitUserCheck(){
         System.out.println("Press Enter to continue.");
         Scanner scanner = new Scanner(System.in);
         scanner.nextLine();
     }
-    private void deduce(){
+
+    /**
+     * 正向推理函数
+     */
+    private boolean deduce(){
         Rule rule;
         while((rule=stepForward())!=null){
             if(rule.isEndRule()){
                 System.out.println("Finish!");
                 System.out.println(rule.getConclusions().get(0));
-                break;
+                return true;
             }
         }
+        return false;
     }
 
+    /**
+     * 初始化系统，从ruleBank.xml中读出规则集
+     * 调用dataBase的setPossibleInitFacts来进行初始化
+     */
     private void initSystem(){
         rules = new RuleReader().readRules();
         dataBase = new DataBase();
         dataBase.setPossibleInitFacts(rules);
     }
+
+    /**
+     * 当用户不退出时，不断循环运行系统
+     */
     private void runSystem(){
         while (run){
             showMenu();
@@ -49,6 +71,11 @@ public class ExpertSystem {
             executeByOrder(order);
         }
     }
+
+    /**
+     * 根据用户的指令执行系统
+     * @param order 用户的指令，a for add, d for delete, s for show, r for run. # for stop
+     */
     private void executeByOrder(char order){
         switch (order){
             case 'a':
@@ -69,12 +96,23 @@ public class ExpertSystem {
                 break;
         }
     }
+
+    /**
+     * 选定初始事实，开始正向推理
+     */
     private void startDeduce(){
         dataBase.initFacts();
         System.out.println("use rules in following order.");
-        deduce();
+        if(!deduce()){
+            System.out.println("Error! can not finish deduce.");
+        }
+
         waitUserCheck();
     }
+
+    /**
+     * 展示菜单
+     */
     private void showMenu(){
         System.out.println("Chose want to do next.");
         System.out.println("enter a to add new rule");
@@ -83,6 +121,11 @@ public class ExpertSystem {
         System.out.println("enter r to run deduce.");
         System.out.println("enter # to end the program.");
     }
+
+    /**
+     * 保证获取到一个合法的字符
+     * @return 获取到的合法字符
+     */
     private char getValidChar(){
         Scanner scanner = new Scanner(System.in);
         String input = scanner.next();
@@ -96,6 +139,11 @@ public class ExpertSystem {
         }
         return c;
     }
+
+    /**
+     * 保证获取到一个合法整数
+     * @return 获取到的整数
+     */
     private int getValidInt(){
         Scanner scanner = new Scanner(System.in);
         String input = scanner.next();
@@ -109,6 +157,11 @@ public class ExpertSystem {
         }
         return ret;
     }
+
+    /**
+     * 保证获取到一个合法指令
+     * @return 获取的指令
+     */
     private char getValidOrder(){
         char order = getValidChar();
         if(!isOrderValid(order)){
@@ -116,6 +169,11 @@ public class ExpertSystem {
         }
         return order;
     }
+
+    /**
+     * 保证获取一个合法的布尔值
+     * @return true or false
+     */
     private boolean getValidBoolean(){
         Scanner scanner = new Scanner(System.in);
         String input = scanner.next();
@@ -126,18 +184,30 @@ public class ExpertSystem {
             return getValidBoolean();
         }
     }
+
+    /**
+     * 判断指令是否合法
+     * @param c 需要判断的指令
+     * @return 合法:true 不合法:false
+     */
     private boolean isOrderValid(char c){
         return c=='a'||c=='d'||c=='s'||c=='r'||c=='#';
     }
+
+    /**
+     * 关闭系统，将规则集写回到ruleBank.xml文件(具体写会的路径在RuleWriter里面定义)
+     */
     private void closeSystem(){
         new RuleWriter().writeRules(rules);
     }
+
+    /**
+     * 新增一条产生式规则
+     */
     private void addNewRule(){
         int id = rules.get(rules.size()-1).getId()+1;
         Rule rule = new Rule();
         rule.setId(id);
-        ArrayList<String> conditions = new ArrayList<>();
-        ArrayList<String> conclusions = new ArrayList<>();
         System.out.println("please input conditions(one per line), enter @ to delete least condition if input wrong one. and end with #.");
         rule.setConditions(getNewConditionsOrConclusions());
         System.out.println("please input conclusions(one per line), enter @ to delete least conclusions if input wrong one. and end with #.");
@@ -147,6 +217,11 @@ public class ExpertSystem {
         rules.add(rule);
         System.out.println("success.");
     }
+
+    /**
+     * 获取一组条件（前件）或是结论（后件）
+     * @return 对应的一组前件或是后件
+     */
     private ArrayList<String> getNewConditionsOrConclusions(){
         ArrayList<String> list = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
@@ -172,6 +247,10 @@ public class ExpertSystem {
         }
         return list;
     }
+
+    /**
+     * 删除一条规则
+     */
     private void deleteRule(){
         System.out.println("please input the id of the rule to delete.");
         int id = getValidInt();
@@ -184,6 +263,9 @@ public class ExpertSystem {
         }
         System.out.println("do not have such rule.");
     }
+    /**
+     * 显示所有规则
+     */
     private void showAllRules(){
         for(Rule rule:rules){
             rule.printRule();
