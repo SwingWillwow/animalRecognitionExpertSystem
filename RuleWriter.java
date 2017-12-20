@@ -1,7 +1,5 @@
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -15,7 +13,7 @@ import java.util.ArrayList;
 
 public class RuleWriter {
     private Document document;//用于生产xml的document
-    private final String savePath="src/saveRuleBank.xml";
+    private final String savePath="data/ruleBank.xml";
     public RuleWriter(){
 
     }

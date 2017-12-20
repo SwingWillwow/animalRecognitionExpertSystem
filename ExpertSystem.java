@@ -84,6 +84,7 @@ public class ExpertSystem {
                 break;
             case 'd':
                 deleteRule();
+                dataBase.setPossibleInitFacts(rules);
                 break;
             case 's':
                 showAllRules();

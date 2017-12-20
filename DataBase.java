@@ -60,7 +60,7 @@ public class DataBase {
     /**
      * 对应课本上的try rule,判断一条规则能否使用和用没用过
      * @param rule 用于判断的规则
-     * @return true: 可以使用 false: 不能使用
+     * @return true: 可以使用并使用 false: 不能使用
      */
     public boolean tryRule(Rule rule){
         if(testRule(rule)){

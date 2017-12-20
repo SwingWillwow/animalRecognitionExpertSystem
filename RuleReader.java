@@ -21,7 +21,7 @@ public class RuleReader {
      * @return 一个Rule组成的ArrayList代表了规则集
      */
     public ArrayList<Rule> readRules(){
-        String rulePath = "src/ruleBank.xml";//读取规则的路径
+        String rulePath = "data/ruleBank.xml";//读取规则的路径
         File file = new File(rulePath);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder;
